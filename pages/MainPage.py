@@ -1,4 +1,3 @@
-from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -9,17 +8,17 @@ import allure
 
 class MainPage:
     def __init__(self, driver: WebDriver):
-        
-        #Инициализация главной страницы.
+
+        # Инициализация главной страницы.
 
         self._driver: WebDriver = driver
         self._driver.get("https://www.chitai-gorod.ru/")
         self._driver.implicitly_wait(5)
         self._driver.maximize_window()
-       
+
     @allure.step("Перейти в корзину")
     def open_cart(self) -> None:
-        
+
         cart_button = WebDriverWait(self._driver, 20).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "a[href='/cart']"))
         )
@@ -28,7 +27,8 @@ class MainPage:
     @allure.step("Перейти на страницу Доставка и оплата")
     def delivery_and_pay(self) -> None:
         delivery_button = WebDriverWait(self._driver, 20).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href="/delivery"]'))
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'a[href="/delivery"]'))
         )
         delivery_button.click()
 
@@ -42,12 +42,11 @@ class MainPage:
     @allure.step("Перейти на страницу магазинов")
     def shops(self) -> None:
         shops_button = WebDriverWait(self._driver, 20).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href="/shops"]'))
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'a[href="/shops"]'))
         )
         shops_button.click()
 
-    
     @allure.step("Поиск книги")
     def find_books(self, value: str):
         self._driver.find_element(By.CSS_SELECTOR, "input.header-search__input").send_keys(value + Keys.RETURN)
-
